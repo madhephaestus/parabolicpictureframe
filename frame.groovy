@@ -5,6 +5,7 @@ def frameHeight =6*24.5
 def glassThickness = 6.5
 def baseHeight = 10
 def glassOver=1
+def supportWidth =20 
 
 def glass = new Cube(frameWidth+glassOver+glassOver,glassThickness,frameHeight).toCSG()
 	.toXMin()
@@ -12,7 +13,19 @@ def glass = new Cube(frameWidth+glassOver+glassOver,glassThickness,frameHeight).
 	.movez(baseHeight)
 	.movex(-glassOver)
 
-def base = Parabola.coneByHeight(20, baseHeight)
+def supportSide = 		Parabola.coneByHeight(supportWidth, frameHeight/2+baseHeight)
+				.rotx(90)
+				.toZMin()
+def box=supportSide.getBoundingBox()
+def supportleft = supportSide
+					.difference(	box.toXMin())	
+					.difference(glass)
+def supportright = supportSide
+					.difference(	box.toXMax())
+					.movex(frameWidth)
+					.difference(glass)
+
+def base = Parabola.coneByHeight(supportWidth+5, baseHeight)
 			.rotx(90)
 			.toZMin()
 
@@ -26,8 +39,11 @@ def supportThickness = CSG.unionAll([
 				     supportConnectCone.movey(glassThickness/-2).movex(frameWidth)])	
 				     .hull()
 glass.setColor(javafx.scene.paint.Color.WHITE);
+glass.addExportFormat("svg")
 return [CSG.unionAll([
 base,
 base.movex(frameWidth),
-supportThickness
+supportThickness,
+supportleft,
+supportright
 ]),glass]			   
