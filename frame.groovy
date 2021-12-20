@@ -4,11 +4,13 @@ def frameHeight =6*24.5
 
 def glassThickness = 6.5
 def baseHeight = 10
+def glassOver=1
 
-def glass = new Cube(frameWidth,glassThickness,frameHeight).toCSG()
+def glass = new Cube(frameWidth+glassOver+glassOver,glassThickness,frameHeight).toCSG()
 	.toXMin()
 	.toZMin()
 	.movez(baseHeight)
+	.movex(-glassOver)
 
 def base = Parabola.coneByHeight(20, baseHeight)
 			.rotx(90)
