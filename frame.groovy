@@ -38,6 +38,11 @@ def supportThickness = CSG.unionAll([
 					supportConnectCone.movey(glassThickness/2).movex(frameWidth),
 				     supportConnectCone.movey(glassThickness/-2).movex(frameWidth)])	
 				     .hull()
+glass.setManufacturing({ toMfg ->
+	return toMfg
+			.rotx(-90)// fix the orentation
+			.toZMin()//move it down to the flat surface
+})				     
 glass.setColor(javafx.scene.paint.Color.WHITE);
 glass.addExportFormat("svg")
 return [CSG.unionAll([
