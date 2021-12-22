@@ -4,30 +4,34 @@ import eu.mihosoft.vrl.v3d.Parabola
 
 //Your code here
 def frameWidth =4*25.4
-def frameHeight =6*24.5
+def frameHeight =6*25.4
 
-def glassThickness = 5.1
+def glassThickness = 5.2
 def baseHeight = 10
 def glassOver=2
 def supportWidth =20
 
-CSG glass = new Cube(frameWidth+glassOver+glassOver,glassThickness,frameHeight).toCSG()
+CSG glass = new Cube(frameWidth+glassOver*2,glassThickness,frameHeight).toCSG()
 		.toXMin()
 		.toZMin()
 		.movez(baseHeight)
-		.movex(-glassOver)
-
-CSG supportSide = 		Parabola.coneByHeight(supportWidth, frameHeight/2+baseHeight)
+		.movex(-glassOver*1)
+CSG glasskw = new Cube(frameWidth+glassOver*3,glassThickness,frameHeight).toCSG()
+		.toXMin()
+		.toZMin()
+		.movez(baseHeight)
+		.movex(-glassOver*1.5)
+CSG supportSide = 		Parabola.coneByHeight(supportWidth, frameHeight/4+baseHeight)
 		.rotx(90)
 		.toZMin()
 CSG box=supportSide.getBoundingBox()
 CSG supportleft = supportSide
 		.difference(	box.toXMin())
-		.difference(glass)
+		.difference(glasskw)
 CSG supportright = supportSide
 		.difference(	box.toXMax())
 		.movex(frameWidth)
-		.difference(glass)
+		.difference(glasskw)
 
 CSG base = Parabola.coneByHeight(supportWidth+5, baseHeight)
 		.rotx(90)
