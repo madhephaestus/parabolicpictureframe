@@ -2,7 +2,6 @@ import eu.mihosoft.vrl.v3d.CSG
 import eu.mihosoft.vrl.v3d.Cube
 import eu.mihosoft.vrl.v3d.Parabola
 
-//Your code here
 def frameWidth =4*25.4
 def frameHeight =6*25.4
 
